@@ -13,6 +13,8 @@ const usersUrl = 'https://fakestoreapi.com/users'
 const cartsUrl = 'https://fakestoreapi.com/carts/?startdate=2000-01-01&enddate=2023-04-07'
 const productsUrl = 'https://fakestoreapi.com/products'
 
+
+
 async function getUsers() {
     let res = await fetch(`https://fakestoreapi.com/users/`)
 
@@ -35,7 +37,7 @@ async function getUser(id) {
 
 }
 
-async function getProducts(id) {
+async function getProducts() {
     let res = await fetch(`https://fakestoreapi.com/products`)
 
     if (res.ok) {
@@ -69,24 +71,17 @@ async function getCarts() {
 }
 
 
-async function retrieveData() {
-    const persons = await getUsers();
-    const products = await getProducts();
-
-    const cart = await getCarts();
-
-    return {
-        'persons': persons.slice(0,3), 
-        'products': products.slice(0,3),
-        'cart': cart.slice(0,3)
-        }
-}
-
-//const data = await retrieveData();
 
 
-async function getAllCategories() {
-    const products = await getProducts();
+const usersData = getUsers()
+const productsData = getProducts()
+const cartsData =  getCarts()
+
+const [users, products, carts] = await Promise.all([usersData, productsData, cartsData])
+
+
+// 2. Creates a data structure containing all available product categories and the total value of products of given category
+function getAllCategories(products) {
     const categories = [];
 
     for (let i = 0; i < products.length; i++) {
@@ -98,10 +93,7 @@ async function getAllCategories() {
     return categories
 }
 
-async function getTotalValueForEachCategory() {
-    const categories = await getAllCategories();
-    const products = await getProducts();
-
+function getTotalValueForEachCategory(products, categories) {
     const totalCategoryPrices = [];
 
     for (let category of categories) {
@@ -121,25 +113,24 @@ async function getTotalValueForEachCategory() {
     return totalCategoryPrices;
 }
 
-async function getCategoriesAndTotalValuesOfProducts() {
-    const categories = await getAllCategories();
-
-    const totalCategoryPrices = await getTotalValueForEachCategory();
-
+function getCategoriesAndTotalValuesOfProducts() {
+    const categories = getAllCategories(products)
+    const totalCategoryPrices = getTotalValueForEachCategory(products, categories);
     return {
         'categories': categories,
         'totalCategoryPrices': totalCategoryPrices
     }
 }
 
+const categoriesAndTotalValues = getCategoriesAndTotalValuesOfProducts();
 
-const result = await getCategoriesAndTotalValuesOfProducts();
+console.log(categoriesAndTotalValues)
+
 
 
 // 3. Finds a cart with the highest value, determines its value and full name of its owner
-async function  getCartWithHighestValue() {
+ async function getCartWithHighestValue(carts) {
 
-    const carts = await getCarts();
     const sumsByCartId = {};
 
    for (let cart of carts) {
@@ -182,9 +173,9 @@ return maxCartObj
 
 }
 
-const highestValueCart = await getCartWithHighestValue();
+const cartWithHighestValue = await getCartWithHighestValue(carts)
+console.log(cartWithHighestValue)
 
-console.log(highestValueCart)
 
 // 4. Find two users living farthest away of each other
 
@@ -202,8 +193,7 @@ function haversine(lat1, lon1, lat2, lon2) {
     return d * 1000; // distance in meters
   }
 
-async function findTwoFarthestUsers() {
-    const users = await getUsers()
+function findTwoFarthestUsers(users) {
     let user1Name = ''
     let user2Name = ''
     let maxDistance = 0;
@@ -227,6 +217,6 @@ async function findTwoFarthestUsers() {
     return {maxDistance, user1Name, user2Name}
 }
 
-const test = await findTwoFarthestUsers()
+const twoFarthestUsers = findTwoFarthestUsers(users);
+console.log(twoFarthestUsers)
 
-console.log(test)

@@ -6,7 +6,6 @@ class Node {
     }
 }
 
-
 const a = new Node(5);
 const b = new Node(3);
 const c = new Node(7);
@@ -37,8 +36,6 @@ g.right = i;
 i.right = j;
 
 
-
-// 1. Calculating the number of nodes that do not have any children.
 
 
 function findNodesWithoutChildren(root) {
