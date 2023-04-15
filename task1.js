@@ -18,9 +18,6 @@ const i = new Node(8);
 const j = new Node(5);
 const x = new Node(5);
 
-x.left = b;
-x.right = c;
-
 a.left = b;
 a.right = c;
 
@@ -35,6 +32,9 @@ g.right = i;
 
 i.right = j;
 
+x.left = b;
+x.right = c;
+
 
 
 
@@ -44,7 +44,6 @@ function findNodesWithoutChildren(root) {
 
     while (stack.length > 0) {
         const current = stack.pop();
-        console.log(current)
 
         if (!current.left && !current.right) {
             count++
@@ -56,16 +55,28 @@ function findNodesWithoutChildren(root) {
 
     return count
   }
-  
 
-console.log(findNodesWithoutChildren(a));
+  function testTask1(root) {
+    // Expect result to equal 5 as in the task intro
+    const result = 5;
+    const count = findNodesWithoutChildren(root);
+    console.log(count)
+
+    if (result === count) {
+        return 'Test for task 1 passed!'
+    } else {
+        return 'Test for task 1 failed!'
+    }
+  }
+
+console.log(testTask1(a));
 
 function maxNumOfEdges(root) {
     if (root === null || (root.left === null && root.right === null)) {
         return 0;
     } else {
-        leftEdges = maxNumOfEdges(root.left)
-        rightEdges = maxNumOfEdges(root.right)
+        const leftEdges = maxNumOfEdges(root.left)
+        const rightEdges = maxNumOfEdges(root.right)
 
         if (leftEdges > rightEdges) {
             return leftEdges + 1;
@@ -75,7 +86,21 @@ function maxNumOfEdges(root) {
     }
 }
 
-console.log(maxNumOfEdges(a))
+
+function testTask2(root) {
+    // Expect result to equal 4 as in the task intro
+    const result = 4;
+    const maxEdges = maxNumOfEdges(root)
+
+    if (result === maxEdges) {
+        return 'Test for task 2 passed!'
+    } else {
+        return 'Test for task2 failed!'
+    }
+  }
+
+  // Correct
+  console.log(testTask2(a));
 
 function checkEquality(root1, root2) {
     if (!root1 && !root2) {
@@ -88,7 +113,19 @@ function checkEquality(root1, root2) {
     return checkEquality(root1.left, root2.left) && checkEquality(root1.right, root2.right)
 }
 
-console.log(checkEquality(a, x))
+
+function testTask3(root1, root2) {
+    // Expect result to be true
+   const result = checkEquality(root1, root2)
+
+    if (result) {
+        return 'Test for task 3 passed!'
+    } else {
+        return 'Test for task 3 failed!'
+    }
+  }
+
+  console.log(testTask3(a,x))
 
 
 
