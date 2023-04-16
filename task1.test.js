@@ -1,4 +1,4 @@
-const functions = require('./task1')
+const functions = require('./task1.cjs')
 
 class Node {
     constructor(value) {
