@@ -196,7 +196,7 @@ function findTwoFarthestUsers(users) {
     for (let i = 0; i < users.length; i++) {
         let user1Lat = users[i].address.geolocation.lat
         let user1Long = users[i].address.geolocation.long
-        for (let j = 1; j < users.length; j++) {
+        for (let j = i + 1; j < users.length; j++) {
             let user2Lat = users[j].address.geolocation.lat
             let user2Long = users[j].address.geolocation.long
 
@@ -214,4 +214,3 @@ function findTwoFarthestUsers(users) {
 
 const twoFarthestUsers = findTwoFarthestUsers(users);
 console.log(twoFarthestUsers)
-
