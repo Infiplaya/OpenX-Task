@@ -17,11 +17,9 @@ const productsUrl = 'https://fakestoreapi.com/products'
 
 async function getUsers() {
     let res = await fetch(`https://fakestoreapi.com/users/`)
-
     if (res.ok) {
         return res.json();
     } 
-    
     throw new Error('Something went wrong...')
 
 }
@@ -61,12 +59,9 @@ async function getProduct(id) {
 
 async function getCarts() {
     let res = await fetch('https://fakestoreapi.com/carts/?startdate=2000-01-01&enddate=2023-04-07');
-
-    
     if (res.ok) {
         return res.json();
     } 
-    
     throw new Error('Something went wrong...')
 }
 

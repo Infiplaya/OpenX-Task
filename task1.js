@@ -42,6 +42,8 @@ function findNodesWithoutChildren(root) {
     const stack = [root];
     let count = 0;
 
+    if (root === null) return 0;
+
     while (stack.length > 0) {
         const current = stack.pop();
 
@@ -56,20 +58,9 @@ function findNodesWithoutChildren(root) {
     return count
   }
 
-  function testTask1(root) {
-    // Expect result to equal 5 as in the task intro
-    const result = 5;
-    const count = findNodesWithoutChildren(root);
-    console.log(count)
+  console.log(findNodesWithoutChildren(null))
 
-    if (result === count) {
-        return 'Test for task 1 passed!'
-    } else {
-        return 'Test for task 1 failed!'
-    }
-  }
 
-console.log(testTask1(a));
 
 function maxNumOfEdges(root) {
     if (root === null || (root.left === null && root.right === null)) {
@@ -87,45 +78,25 @@ function maxNumOfEdges(root) {
 }
 
 
-function testTask2(root) {
-    // Expect result to equal 4 as in the task intro
-    const result = 4;
-    const maxEdges = maxNumOfEdges(root)
-
-    if (result === maxEdges) {
-        return 'Test for task 2 passed!'
-    } else {
-        return 'Test for task2 failed!'
-    }
-  }
-
-  // Correct
-  console.log(testTask2(a));
 
 function checkEquality(root1, root2) {
-    if (!root1 && !root2) {
-        return true;
-      } else if (!root1 || !root2) {
-        return false; 
-      } else if (root1.val !== root2.val) {
-        return false; 
-      } 
-    return checkEquality(root1.left, root2.left) && checkEquality(root1.right, root2.right)
+    if (!root1 && !root2) return true;
+    if (!root1 || !root2) return false;
+    return (root1.value == root2.value
+    && checkEquality(root1.left, root2.left)
+    && checkEquality(root1.right, root2.right));  
 }
 
 
-function testTask3(root1, root2) {
-    // Expect result to be true
-   const result = checkEquality(root1, root2)
 
-    if (result) {
-        return 'Test for task 3 passed!'
-    } else {
-        return 'Test for task 3 failed!'
-    }
-  }
+const functions = {
+    findNodesWithoutChildren,
+    maxNumOfEdges,
+    checkEquality
+}
 
-  console.log(testTask3(a,x))
+module.exports = functions
+
 
 
 
